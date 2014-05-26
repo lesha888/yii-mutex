@@ -49,8 +49,11 @@ class EFileMutex extends EMutex
 		{
 			$this->mutexPath=Yii::app()->getRuntimePath().'/mutex';
 		}
-		$this->mutexPath=Yii::getPathOfAlias($this->mutexPath);
-		if (!is_dir($this->mutexPath))
+		else
+		{
+			$this->mutexPath=Yii::getPathOfAlias($this->mutexPath);
+		}
+		if(!is_dir($this->mutexPath))
 		{
 			self::createDirectory($this->mutexPath,$this->dirMode,true);
 		}
