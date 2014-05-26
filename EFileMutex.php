@@ -52,7 +52,7 @@ class EFileMutex extends EMutex
 		$this->mutexPath=Yii::getPathOfAlias($this->mutexPath);
 		if (!is_dir($this->mutexPath))
 		{
-			CFileHelper::createDirectory($this->mutexPath,$this->dirMode,true);
+			self::createDirectory($this->mutexPath,$this->dirMode,true);
 		}
 	}
 
@@ -106,5 +106,34 @@ class EFileMutex extends EMutex
 			unset($this->_files[$name]);
 			return true;
 		}
+	}
+
+	/**
+	 * This method was backported from the Yii 1.1.15 development version in order to allow users
+	 * to use this class with the Yii 1.1.14.
+	 *
+	 * Shared environment safe version of mkdir. Supports recursive creation.
+	 * For avoidance of umask side-effects chmod is used.
+	 *
+	 * @param string $dst path to be created.
+	 * @param integer $mode the permission to be set for newly created directories, if not set - 0777 will be used.
+	 * @param boolean $recursive whether to create directory structure recursive if parent dirs do not exist.
+	 * @return boolean result of mkdir.
+	 * @see mkdir
+	 */
+	private static function createDirectory($dst,$mode=null,$recursive=false)
+	{
+		if($mode===null)
+		{
+			$mode=0777;
+		}
+		$prevDir=dirname($dst);
+		if($recursive && !is_dir($dst) && !is_dir($prevDir))
+		{
+			self::createDirectory(dirname($dst),$mode,true);
+		}
+		$res=mkdir($dst, $mode);
+		@chmod($dst,$mode);
+		return $res;
 	}
 }
