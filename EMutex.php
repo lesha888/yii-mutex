@@ -27,6 +27,7 @@ abstract class EMutex extends CComponent
 	 */
 	public function init()
 	{
+		parent::init();
 		if($this->autoRelease)
 		{
 			$locks=&$this->_locks;

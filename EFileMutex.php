@@ -41,6 +41,7 @@ class EFileMutex extends EMutex
 	 */
 	public function init()
 	{
+		parent::init();
 		if(stripos(php_uname('s'),'win')===0)
 		{
 			throw new CException('EFileMutex does not have MS Windows operating system support.');
