@@ -9,7 +9,7 @@
  * @author resurtm <resurtm@gmail.com>
  * @since 0.1
  */
-abstract class EMutex extends CComponent
+abstract class EMutex extends CApplicationComponent
 {
 	/**
 	 * @var boolean whether all locks acquired in this process (i.e. local locks) must be released automagically
