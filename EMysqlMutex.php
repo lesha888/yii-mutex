@@ -30,8 +30,8 @@ class EMysqlMutex extends EDbMutex
 	protected function acquireLock($name, $timeout=0)
 	{
 		return (boolean)$this->getDb()
-			->createCommand('SELECT GET_LOCK(:name, :timeout)',array(':name'=>$name,':timeout'=>$timeout))
-			->queryScalar();
+			->createCommand('SELECT GET_LOCK(:name, :timeout)')
+			->queryScalar(array(':name'=>$name,':timeout'=>$timeout));
 	}
 
 	/**
@@ -40,7 +40,7 @@ class EMysqlMutex extends EDbMutex
 	protected function releaseLock($name)
 	{
 		return (boolean)$this->getDb()
-			->createCommand('SELECT RELEASE_LOCK(:name)',array(':name'=>$name))
-			->queryScalar();
+			->createCommand('SELECT RELEASE_LOCK(:name)')
+			->queryScalar(array(':name'=>$name));
 	}
 }
